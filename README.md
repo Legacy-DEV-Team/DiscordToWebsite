@@ -2,8 +2,7 @@ Here’s a `README.md` file for your **"Discord To Website"** project, along wit
 
 ### `README.md`:
 
-```markdown
-# Discord To Website
+## Discord To Website
 
 This project, **Discord To Website**, is a Node.js application developed by **Legacy DEV Team**. It allows websites to fetch user data (such as username, discriminator, and avatar) from Discord using the Discord ID through a simple API.
 
