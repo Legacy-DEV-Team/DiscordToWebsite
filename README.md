@@ -1,14 +1,11 @@
-Here’s a `README.md` file for your **"Discord To Website"** project, along with the suggested file structure.
+# Discord To Website
 
-### `README.md`:
-
-## Discord To Website
-
-This project, **Discord To Website**, is a Node.js application developed by **Legacy DEV Team**. It allows websites to fetch user data (such as username, discriminator, and avatar) from Discord using the Discord ID through a simple API.
+This project, **Discord To Website**, is a Node.js application developed by **Legacy DEV Team**. It allows websites to fetch user and guild member data from Discord using a simple API.
 
 ## Features
 - Fetch Discord user information based on the Discord ID.
-- Exposes an API to retrieve the user's username, discriminator, and avatar URL.
+- Fetch guild members along with their roles, Discord join date, and guild join date.
+- Exposes an API to retrieve user and guild member data.
 - Developed using **Node.js** with **discord.js** and **Express**.
 - Easy to integrate into your website.
 - MIT License.
@@ -30,7 +27,7 @@ This project, **Discord To Website**, is a Node.js application developed by **Le
 
 3. Set up your **Discord Bot Token**:
    - Go to the [Discord Developer Portal](https://discord.com/developers/applications) and create a new bot.
-   - Copy the **Bot Token** and replace `'YOUR_BOT_TOKEN'` in the `bot.js` file.
+   - Copy the **Bot Token** and update the `config.js` file with your bot token and server details.
 
 4. Run the bot:
 
@@ -38,15 +35,13 @@ This project, **Discord To Website**, is a Node.js application developed by **Le
     node bot.js
     ```
 
-5. The API will be running on `http://localhost:5000`. You can now use the endpoint:
-
-    ```
-    GET /get_user_info?discord_id=DISCORD_USER_ID
-    ```
+5. The API will be running on `http://localhost:5000`. You can now use the endpoints.
 
 ## API Usage
 
-### Request
+### Fetch User Info
+
+#### Request
 
 Send a `GET` request to fetch a user's Discord data by their **Discord ID**:
 
@@ -54,33 +49,60 @@ Send a `GET` request to fetch a user's Discord data by their **Discord ID**:
 GET http://localhost:5000/get_user_info?discord_id=USER_DISCORD_ID
 ```
 
-### Response
-
-The response will contain the following user information:
+#### Response
 
 ```json
 {
   "username": "ExampleUser",
-  "discriminator": "1234",
   "avatar_url": "https://cdn.discordapp.com/avatars/123456789012345678/a_123456789abcdef123456789abcdef12.png"
+}
+```
+
+### Fetch Guild Members
+
+#### Request
+
+Send a `GET` request to fetch all guild members with their details:
+
+```
+GET http://localhost:5000/get_user_info?discord_guild_id=GUILD_DISCORD_ID
+```
+
+#### Response
+
+```json
+{
+  "guild_discord_id": "GUILD_DISCORD_ID", 
+  "members_count": 100,
+  "members": {
+    "123456789012345678": {
+      "discord_id": "123456789012345678",
+      "discord_member_since": "2020-01-01T12:34:56.789Z",
+      "guild_member_since": "2021-06-15T09:22:33.123Z",
+      "roles": [
+        { "role_id": "987654321098765432", "role_name": "Admin" },
+        { "role_id": "876543210987654321", "role_name": "Member" }
+      ]
+    }
+  }
 }
 ```
 
 ### Error Responses
 
-- **No Discord ID provided**:
+- **No Discord ID or Guild ID provided**:
   ```json
-  { "error": "No Discord ID provided" }
+  { "error": "No Discord ID or Guild ID provided" }
   ```
 
-- **User not found**:
+- **User or Guild not found**:
   ```json
-  { "error": "User not found" }
+  { "error": "User or Guild not found" }
   ```
 
-- **Failed to fetch user data**:
+- **Failed to fetch data**:
   ```json
-  { "error": "Failed to fetch user data" }
+  { "error": "Failed to fetch data" }
   ```
 
 ## License
