@@ -49,6 +49,7 @@ app.get('/get_user_info', async (req, res) => {
           roles: member.roles.cache.map(role => ({
             role_id: role.id,
             role_name: role.name,
+            role_color: role.hexColor,
           })),
         };
       });
